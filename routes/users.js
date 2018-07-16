@@ -8,15 +8,25 @@ const router = express.Router();
 
 router.post('/users', (req, res) => {
   const { fullname, username, password } = req.body;
-  User
-    .create({
-      fullname,
+  return User.hashPassword(password)
+  .then(digest => {
+    const newUser = {
       username,
-      password
-    })
-    .then(user => {
-      return res.status(201).location(`/api/users/${user.id}`).json(user.serialize());
-    });
+      password: digest,
+      fullname
+    };
+    return User.create(newUser);
+  })
+  .then(result => {
+    return res.status(201).location(`/api/users/${result.id}`).json(result);
+  })
+  .catch(err => {
+    if (err.code === 11000) {
+      err = new Error('The username already exists');
+      err.status = 400;
+    }
+    next(err);
+  });
 })
 
 module.exports = router;
