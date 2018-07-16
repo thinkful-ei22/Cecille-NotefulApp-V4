@@ -7,6 +7,8 @@ const User = require('../models/user');
 const router = express.Router();
 
 router.post('/users', (req, res) => {
+  const { fullname, username, password } = req.body;
+
   const requiredFields = ['username', 'password'];
   const missingField = requiredFields.find(field => !(field in req.body));
 
@@ -43,8 +45,6 @@ router.post('/users', (req, res) => {
       location: nonTrimmedField
     });
   }
-
-  const { fullname, username, password } = req.body;
 
   return User.hashPassword(password)
   .then(digest => {
