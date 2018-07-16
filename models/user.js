@@ -18,4 +18,12 @@ userSchema.set('toObject', {
   }
 });
 
+userSchema.methods.serialize = function () {
+  return {
+    id: this._id,
+    fullname: this.fullname,
+    username: this.username
+  };
+};
+
 module.exports = mongoose.model('User', userSchema);
