@@ -6,15 +6,13 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const localStrategy = require('./passport/local');
 
-// Other statements removed for brevity
-const authRouter = require('./routes/auth');
-
 const { PORT, MONGODB_URI } = require('./config');
 
 const notesRouter = require('./routes/notes');
 const foldersRouter = require('./routes/folders');
 const tagsRouter = require('./routes/tags');
 const usersRouter = require('./routes/users');
+const authRouter = require('./routes/auth');
 
 // Create an Express application
 const app = express();
@@ -24,13 +22,12 @@ app.use(morgan(process.env.NODE_ENV === 'development' ? 'dev' : 'common', {
   skip: () => process.env.NODE_ENV === 'test'
 }));
 
-passport.use(localStrategy);
-
 // Create a static webserver
 app.use(express.static('public'));
 
 // Parse request body
 app.use(express.json());
+passport.use(localStrategy);
 
 // Mount routers
 app.use('/api/notes', notesRouter);
