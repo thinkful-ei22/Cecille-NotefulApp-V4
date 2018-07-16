@@ -16,6 +16,20 @@ router.post('/users', (req, res) => {
     return next(err);
   }
 
+  const stringFields = ['username', 'password', 'firstName', 'lastName'];
+  const nonStringField = stringFields.find(
+    field => field in req.body && typeof req.body[field] !== 'string'
+  );
+
+  if (nonStringField) {
+    return res.status(422).json({
+      code: 422,
+      reason: 'ValidationError',
+      message: 'Incorrect field type: expected string',
+      location: nonStringField
+    });
+  }
+
   const { fullname, username, password } = req.body;
 
   return User.hashPassword(password)
