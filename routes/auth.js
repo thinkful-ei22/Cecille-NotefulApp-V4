@@ -7,7 +7,7 @@ const { JWT_SECRET, JWT_EXPIRY } = require('../config')
 
 const router = express.Router();
 
-router.use('/', passport.authenticate('jwt', { session: false, failWithError: true }));
+const jwtAuth = passport.authenticate('jwt', { session: false, failWithError: true });
 
 const options = {session: false, failWithError: true};
 
