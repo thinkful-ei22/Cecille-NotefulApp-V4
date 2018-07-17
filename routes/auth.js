@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
+const { JWT_SECRET, JWT_EXPIRY } = require('../config')
 
 const router = express.Router();
 
