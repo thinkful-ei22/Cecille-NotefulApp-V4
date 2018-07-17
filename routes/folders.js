@@ -2,9 +2,11 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
+const passport = require('passport');
 
 const Folder = require('../models/folder');
 const Note = require('../models/note');
+const { Strategy: jwtStrategy, ExtractJwt } = require('passport-jwt');
 
 const router = express.Router();
 
