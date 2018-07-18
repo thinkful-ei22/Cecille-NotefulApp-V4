@@ -74,7 +74,6 @@ describe.only('Noteful API - Users', function () {
           .then(res => {
             expect(res).to.have.status(422);
             expect(res.body.message).to.equal(`Missing 'username' in request body`);
-            //expect(res.body.location).to.equal(`username`)
           })
         })
 
