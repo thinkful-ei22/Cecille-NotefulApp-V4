@@ -30,7 +30,10 @@ mongoose.connect(MONGODB_URI)
       Folder.createIndexes(),
 
       Tag.insertMany(seedTags),
-      Tag.createIndexes()
+      Tag.createIndexes(),
+
+      User.insertMany(seedUsers),
+      User.createIndexes()
 
     ]);
   })
