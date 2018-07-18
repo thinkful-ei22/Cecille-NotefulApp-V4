@@ -111,6 +111,8 @@ router.post('/', (req, res, next) => {
 /* ========== PUT/UPDATE A SINGLE ITEM ========== */
 router.put('/:id', (req, res, next) => {
   const { id } = req.params;
+  const userId = req.user.id;
+
   const { title, content, folderId, tags = [] } = req.body;
 
   /***** Never trust users - validate input *****/
@@ -141,9 +143,9 @@ router.put('/:id', (req, res, next) => {
     }
   }
 
-  const updateNote = { title, content, folderId, tags };
+  const updateNote = { title, content, folderId, tags, userId };
 
-  Note.findByIdAndUpdate(id, updateNote, { new: true })
+  Note.findOneAndUpdate({ _id: id, userId }, updateNote, { new: true })
     .then(result => {
       if (result) {
         res.json(result);
