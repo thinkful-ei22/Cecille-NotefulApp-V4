@@ -189,6 +189,20 @@ describe.only('Noteful API - Users', function () {
               })
           });
 
+            it.only('Should reject users with duplicate username', function() {
+              const testUser = { fullname, password, username: 'bobuser' }
+              return chai
+                .request(app)
+                .post('/api/users')
+                .send(testUser)
+                .then(res => {
+                  expect(res).to.have.status(201);
+                  //expect(res.body.reason).to.equal(`LoginError`);
+                  //expect(res.body.message).to.equal('The username already exists')
+                  //expect(res.body.location).to.equal('username');
+                })
+            });
+
 
 
       /**
