@@ -119,6 +119,34 @@ describe.only('Noteful API - Users', function () {
             })
         });
 
+        it('Should reject users with non-trimmed username', function() {
+          const testUser = { fullname, username: ' hello', password }
+          return chai
+            .request(app)
+            .post('/api/users')
+            .send(testUser)
+            .then(res => {
+              expect(res).to.have.status(422);
+              expect(res.body.reason).to.equal(`ValidationError`);
+              expect(res.body.message).to.equal('Cannot start or end with whitespace')
+              expect(res.body.location).to.equal('username');
+            })
+        });
+
+        it('Should reject users with non-trimmed password', function() {
+          const testUser = { fullname, username, password: ' hello' }
+          return chai
+            .request(app)
+            .post('/api/users')
+            .send(testUser)
+            .then(res => {
+              expect(res).to.have.status(422);
+              expect(res.body.reason).to.equal(`ValidationError`);
+              expect(res.body.message).to.equal('Cannot start or end with whitespace')
+              expect(res.body.location).to.equal('password');
+            })
+        });
+
 
       /**
        * COMPLETE ALL THE FOLLOWING TESTS
