@@ -10,6 +10,25 @@ const router = express.Router();
 
 router.use('/', passport.authenticate('jwt', { session: false, failWithError: true }));
 
+const validateFolderId(folderId, userId) {
+  if (folderId === undefined) {
+    return Promise.resolve();
+  }
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    const err = new Error('The `folderId` is not valid');
+    err.status = 400;
+    return next(err);
+  }
+  return Folder.count({ _id: folderId, userId })
+    .then(count => {
+      if(count === 0) {
+        const err = new Error('The `folderId` is not valid');
+        err.status = 400;
+        return Promise.reject(err);
+      }
+    })
+}
+
 /* ========== GET/READ ALL ITEMS ========== */
 router.get('/', (req, res, next) => {
   const { searchTerm, folderId, tagId } = req.query;
