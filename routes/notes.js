@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.use('/', passport.authenticate('jwt', { session: false, failWithError: true }));
 
-const validateFolderId(folderId, userId) {
+const validateFolderId = function(folderId, userId) {
   if (folderId === undefined) {
     return Promise.resolve();
   }
