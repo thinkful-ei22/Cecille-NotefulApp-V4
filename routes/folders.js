@@ -117,6 +117,7 @@ router.put('/:id', (req, res, next) => {
 /* ========== DELETE/REMOVE A SINGLE ITEM ========== */
 router.delete('/:id', (req, res, next) => {
   const { id } = req.params;
+  const userId = req.user.id;
 
   /***** Never trust users - validate input *****/
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -125,7 +126,7 @@ router.delete('/:id', (req, res, next) => {
     return next(err);
   }
 
-  const folderRemovePromise = Folder.findByIdAndRemove(id);
+  const folderRemovePromise = Folder.findOneAndRemove({ _id: id, userId });
 
   const noteRemovePromise = Note.updateMany(
     { folderId: id },
