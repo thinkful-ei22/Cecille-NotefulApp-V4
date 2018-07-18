@@ -184,6 +184,9 @@ router.put('/:id', (req, res, next) => {
     }
   }
 
+  validateFolderId(folderId, userId);
+  validateTags(tags, userId);
+
   const updateNote = { title, content, folderId, tags, userId };
 
   Note.findOneAndUpdate({ _id: id, userId }, updateNote, { new: true })
