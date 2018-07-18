@@ -105,6 +105,21 @@ describe.only('Noteful API - Users', function () {
             })
         })
 
+        it('Should reject users with non-string password', function () {
+          const testUser = { fullname, username, password: 42 }
+          return chai
+            .request(app)
+            .post('/api/users')
+            .send(testUser)
+            .then(res => {
+              expect(res).to.have.status(422);
+              expect(res.body.reason).to.equal(`ValidationError`);
+              expect(res.body.message).to.equal('Incorrect field type: expected string')
+              expect(res.body.location).to.equal('password');
+            })
+        });
+
+
       /**
        * COMPLETE ALL THE FOLLOWING TESTS
        */
