@@ -147,6 +147,20 @@ describe.only('Noteful API - Users', function () {
             })
         });
 
+        it('Should reject users with empty username', function() {
+          const testUser = { fullname, username: '', password }
+          return chai
+            .request(app)
+            .post('/api/users')
+            .send(testUser)
+            .then(res => {
+              expect(res).to.have.status(422);
+              expect(res.body.reason).to.equal(`ValidationError`);
+              expect(res.body.message).to.equal('Must be at least 1 characters long')
+              expect(res.body.location).to.equal('username');
+            })
+        });
+
 
       /**
        * COMPLETE ALL THE FOLLOWING TESTS
