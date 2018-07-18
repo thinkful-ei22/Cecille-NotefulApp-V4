@@ -80,6 +80,7 @@ router.post('/', (req, res, next) => {
 router.put('/:id', (req, res, next) => {
   const { id } = req.params;
   const { name } = req.body;
+  const userId = req.user.id;
 
   /***** Never trust users - validate input *****/
   if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -94,9 +95,9 @@ router.put('/:id', (req, res, next) => {
     return next(err);
   }
 
-  const updateFolder = { name };
+  const updateFolder = { name, userId };
 
-  Folder.findByIdAndUpdate(id, updateFolder, { new: true })
+  Folder.findOneAndUpdate({ _id: id, userId }, updateFolder, { new: true })
     .then(result => {
       if (result) {
         res.json(result);
