@@ -29,6 +29,25 @@ const validateFolderId(folderId, userId) {
     })
 }
 
+const validateTags = function(tags, userId) {
+  if(tags === undefined) {
+    return Promise.resolve();
+  }
+  if(!Array.isArray[tags]) {
+    const err = new Error('The `tags` must be an array');
+    err.status = 400;
+    return Promise.reject(err);
+  }
+  return Tag.find({ $and: [{ _id: { $in: tags }, userId }] })
+    .then(results => {
+      if(tags.length !== results.length) {
+        const err = new Error('The `tags` array contains an invalid id');
+        err.status = 400;
+        return Promise.reject(err);
+      }
+    })
+}
+
 /* ========== GET/READ ALL ITEMS ========== */
 router.get('/', (req, res, next) => {
   const { searchTerm, folderId, tagId } = req.query;
