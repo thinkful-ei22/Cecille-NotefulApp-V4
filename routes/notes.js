@@ -132,6 +132,9 @@ router.post('/', (req, res, next) => {
     });
   }
 
+  validateFolderId(folderId, userId);
+  validateTags(tags, userId);
+
   const newNote = { title, content, folderId, tags, userId };
 
   Note.create(newNote)
