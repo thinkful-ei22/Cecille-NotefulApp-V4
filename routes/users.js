@@ -7,7 +7,7 @@ const User = require('../models/user');
 
 const router = express.Router();
 
-router.post('/users', (req, res) => {
+router.post('/users', (req, res, next) => {
   const { fullname, username, password } = req.body;
 
   const requiredFields = ['username', 'password'];
