@@ -6,12 +6,13 @@ const mongoose = require('mongoose');
 const { TEST_MONGODB_URI } = require('../config');
 
 const User = require('../models/user');
+const seedUsers = require('../db/seed/users');
 
 const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe.only('Noteful API - Users', function () {
+describe('Noteful API - Users', function () {
   const username = 'exampleUser';
   const password = 'examplePass';
   const fullname = 'Example User';
@@ -20,6 +21,9 @@ describe.only('Noteful API - Users', function () {
     return mongoose.connect(TEST_MONGODB_URI)
       .then(() => mongoose.connection.db.dropDatabase());
   });
+
+  let token;
+  let user;
 
   beforeEach(function () {
     return Promise.all([
@@ -97,7 +101,7 @@ describe.only('Noteful API - Users', function () {
             });
         })
 
-        it.only('Should reject users with non-string username', function () {
+        it('Should reject users with non-string username', function () {
           const testUser = { fullname, password, username: 42 }
           return chai
             .request(app)
@@ -195,7 +199,7 @@ describe.only('Noteful API - Users', function () {
               })
           });
 
-            it.only('Should reject users with duplicate username', function() {
+            it('Should reject users with duplicate username', function() {
               const testUser = { fullname, password, username: 'bobuser' }
               return chai
                 .request(app)
@@ -241,3 +245,4 @@ describe.only('Noteful API - Users', function () {
     });
   });
 });
+})
