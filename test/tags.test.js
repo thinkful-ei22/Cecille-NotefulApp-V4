@@ -20,6 +20,9 @@ describe('Noteful API - Tags', function () {
       .then(() => mongoose.connection.db.dropDatabase());
   });
 
+  let token;
+  let user;
+
   beforeEach(function () {
     return Promise.all([
       Tag.insertMany(seedTags),
