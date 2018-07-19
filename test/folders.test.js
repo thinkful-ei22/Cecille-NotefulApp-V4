@@ -35,6 +35,42 @@ describe('Noteful API - Folders', function () {
     return mongoose.disconnect();
   });
 
+  describe.only('GET /api/folders', function () {
+        it('should return the correct number of folders', function () {
+          const dbPromise = Folder.find({ userId: user.id });
+          const apiPromise = chai.request(app)
+          .get('/api/folders')
+          .set('Authorization', `Bearer ${token}`); // <<== Add this
+
+          return Promise.all([dbPromise, apiPromise])
+          .then(([data, res]) => {
+            expect(res).to.have.status(200);
+            expect(res).to.be.json;
+            expect(res.body).to.be.a('array');
+            expect(res.body).to.have.length(data.length);
+          });
+        });
+
+        it('should return a list with the correct right fields', function () {
+          const dbPromise = Folder.find({ userId: user.id }); // <<== Add filter on User Id
+          const apiPromise = chai.request(app)
+            .get('/api/folders')
+            .set('Authorization', `Bearer ${token}`); // <<== Add Authorization header
+
+          return Promise.all([dbPromise, apiPromise])
+            .then(([data, res]) => {
+              expect(res).to.have.status(200);
+              expect(res).to.be.json;
+              expect(res.body).to.be.a('array');
+              res.body.forEach(function (item) {
+                expect(item).to.be.a('object');
+                expect(item).to.have.keys('id', 'name', 'userId', 'createdAt', 'updatedAt');  // <<== Update assertion
+              });
+            });
+          });
+        });
+
+
   describe('GET /api/folders', function () {
 
     it('should return a list sorted by name with the correct number of folders', function () {
