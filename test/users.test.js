@@ -230,23 +230,6 @@ describe('Noteful API - Users', function () {
                   expect(res.body.location).to.equal('fullname');
                 })
             })
-
-        describe.only('GET /api/folders', function () {
-              it('should return the correct number of folders', function () {
-                const dbPromise = Folder.find();
-                const apiPromise = chai.request(app)
-                .get('/api/folders')
-                .set('Authorization', `Bearer ${token}`); // <<== Add this
-
-                return Promise.all([dbPromise, apiPromise])
-                .then(([data, res]) => {
-                  expect(res).to.have.status(200);
-                  expect(res).to.be.json;
-                  expect(res.body).to.be.a('array');
-                  expect(res.body).to.have.length(data.length);
-                });
-              });
-    });
   });
 });
 })
