@@ -215,20 +215,6 @@ describe('Noteful API - Users', function () {
                 })
             })
 
-
-      /**
-       * COMPLETE ALL THE FOLLOWING TESTS
-       */
-      it('Should reject users with missing password');
-      it('Should reject users with non-string username');
-      it('Should reject users with non-string password');
-      it('Should reject users with non-trimmed username');
-      it('Should reject users with non-trimmed password');
-      it('Should reject users with empty username');
-      it('Should reject users with password less than 8 characters');
-      it('Should reject users with password greater than 72 characters');
-      it('Should reject users with duplicate username');
-      it('Should trim fullname');
     });
   });
 });
