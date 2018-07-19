@@ -290,11 +290,12 @@ describe('Noteful API - Tags', function () {
 
     it('should delete an existing document and respond with 204', function () {
       let data;
-      return Tag.findOne()
+      return Tag.findOne({ userId: user.id })
         .then(_data => {
           data = _data;
           return chai.request(app)
-            .delete(`/api/tags/${data.id}`);
+            .delete(`/api/tags/${data.id}`)
+            .set('Authorization', `Bearer ${token}`)
         })
         .then(function (res) {
           expect(res).to.have.status(204);
@@ -309,6 +310,7 @@ describe('Noteful API - Tags', function () {
     it('should respond with a 400 for an invalid id', function () {
       return chai.request(app)
         .delete('/api/tags/NOT-A-VALID-ID')
+        .set('Authorization', `Bearer ${token}`)
         .then(res => {
           expect(res).to.have.status(400);
           expect(res.body.message).to.equal('The `id` is not valid');
