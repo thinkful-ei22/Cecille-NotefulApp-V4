@@ -9,6 +9,7 @@ const { JWT_SECRET, JWT_EXPIRY } = require('../config')
 
 const app = require('../server');
 const Folder = require('../models/folder');
+const User = require('../models/user');
 const seedFolders = require('../db/seed/folders');
 const { TEST_MONGODB_URI } = require('../config');
 
