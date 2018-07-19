@@ -11,7 +11,7 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe.only('Noteful API - Users', function () {
+describe('Noteful API - Users', function () {
   const username = 'exampleUser';
   const password = 'examplePass';
   const fullname = 'Example User';
@@ -89,7 +89,7 @@ describe.only('Noteful API - Users', function () {
             });
         })
 
-        it.only('Should reject users with non-string username', function () {
+        it('Should reject users with non-string username', function () {
           const testUser = { fullname, password, username: 42 }
           return chai
             .request(app)
@@ -187,7 +187,7 @@ describe.only('Noteful API - Users', function () {
               })
           });
 
-            it.only('Should reject users with duplicate username', function() {
+            it('Should reject users with duplicate username', function() {
               const testUser = { fullname, password, username: 'bobuser' }
               return chai
                 .request(app)
