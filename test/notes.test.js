@@ -446,10 +446,12 @@ describe('Noteful API - Notes', function () {
 
     it('should delete an existing document and respond with 204', function () {
       let data;
-      return Note.findOne()
+      return Note.findOne({ userId: user.id })
         .then(_data => {
           data = _data;
-          return chai.request(app).delete(`/api/notes/${data.id}`);
+          return chai.request(app)
+          .delete(`/api/notes/${data.id}`)
+          .set('Authorization', `Bearer ${token}`)
         })
         .then(function (res) {
           expect(res).to.have.status(204);
@@ -463,6 +465,7 @@ describe('Noteful API - Notes', function () {
     it('should respond with a 400 for an invalid id', function () {
       return chai.request(app)
         .delete('/api/notes/NOT-A-VALID-ID')
+        .set('Authorization', `Bearer ${token}`)
         .then(res => {
           expect(res).to.have.status(400);
           expect(res.body.message).to.equal('The `id` is not valid');
