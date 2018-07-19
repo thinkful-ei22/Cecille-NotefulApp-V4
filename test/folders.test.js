@@ -51,7 +51,7 @@ describe('Noteful API - Folders', function () {
 
     it('should return a list sorted by name with the correct number of folders', function () {
       return Promise.all([
-        Folder.find().sort('name'),
+        Folder.find({ userId: user.id }).sort('name'),
         chai.request(app)
           .get('/api/folders')
           .set('Authorization', `Bearer ${token}`)
@@ -67,7 +67,9 @@ describe('Noteful API - Folders', function () {
     it('should return a list with the correct fields and values', function () {
       return Promise.all([
         Folder.find({ userId: user.id }).sort('name'),
-        chai.request(app).get('/api/folders')
+        chai.request(app)
+          .get('/api/folders')
+          .set('Authorization', `Bearer ${token}`)
       ])
         .then(([data, res]) => {
           expect(res).to.have.status(200);
@@ -76,7 +78,7 @@ describe('Noteful API - Folders', function () {
           expect(res.body).to.have.length(data.length);
           res.body.forEach(function (item, i) {
             expect(item).to.be.a('object');
-            expect(item).to.have.all.keys('id', 'name', 'createdAt', 'updatedAt');
+            expect(item).to.have.all.keys('id', 'name', 'createdAt', 'updatedAt', 'userId');
             expect(item.id).to.equal(data[i].id);
             expect(item.name).to.equal(data[i].name);
             expect(new Date(item.createdAt)).to.eql(data[i].createdAt);
