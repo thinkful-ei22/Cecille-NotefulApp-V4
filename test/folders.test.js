@@ -47,7 +47,7 @@ describe('Noteful API - Folders', function () {
     return mongoose.disconnect();
   });
 
-  describe.only('GET /api/folders', function () {
+  describe('GET /api/folders', function () {
 
     it('should return a list sorted by name with the correct number of folders', function () {
       return Promise.all([
