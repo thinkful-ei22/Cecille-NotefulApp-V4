@@ -8,6 +8,7 @@ const { TEST_MONGODB_URI } = require('../config');
 const User = require('../models/user');
 const Folder = require('../models/folder');
 const seedUsers = require('../db/seed/users');
+const seedFolders = require('../db/seed/folders');
 
 const expect = chai.expect;
 
