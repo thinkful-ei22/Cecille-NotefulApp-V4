@@ -43,12 +43,14 @@ describe('Noteful API - Folders', function () {
     return mongoose.disconnect();
   });
 
-  describe('GET /api/folders', function () {
+  describe.only('GET /api/folders', function () {
 
     it('should return a list sorted by name with the correct number of folders', function () {
       return Promise.all([
         Folder.find().sort('name'),
-        chai.request(app).get('/api/folders')
+        chai.request(app)
+          .get('/api/folders')
+          .set('Authorization', `Bearer ${token}`)
       ])
         .then(([data, res]) => {
           expect(res).to.have.status(200);
