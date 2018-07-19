@@ -4,16 +4,20 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const mongoose = require('mongoose');
 const express = require('express');
+const jwt = require('jsonwebtoken');
+const { JWT_SECRET, JWT_EXPIRY } = require('../config')
 
 const app = require('../server');
 const Tag = require('../models/tag');
 const Note = require('../models/note');
 const Folder = require('../models/folder');
+const User = require('../models/user');
 const { TEST_MONGODB_URI } = require('../config');
 
 const seedNotes = require('../db/seed/notes');
 const seedFolders = require('../db/seed/folders');
 const seedTags = require('../db/seed/tags');
+const seedUsers = require('../db/seed/users');
 
 chai.use(chaiHttp);
 const expect = chai.expect;
