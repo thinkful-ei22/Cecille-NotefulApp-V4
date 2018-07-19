@@ -143,6 +143,7 @@ describe('Noteful API - Tags', function () {
       let body;
       return chai.request(app)
         .post('/api/tags')
+        .set('Authorization', `Bearer ${token}`)
         .send(newItem)
         .then(function (res) {
           body = res.body;
@@ -150,7 +151,7 @@ describe('Noteful API - Tags', function () {
           expect(res).to.have.header('location');
           expect(res).to.be.json;
           expect(body).to.be.a('object');
-          expect(body).to.have.all.keys('id', 'name', 'createdAt', 'updatedAt');
+          expect(body).to.have.all.keys('id', 'name', 'createdAt', 'updatedAt', 'userId');
           return Tag.findById(body.id);
         })
         .then(data => {
@@ -166,6 +167,7 @@ describe('Noteful API - Tags', function () {
 
       return chai.request(app)
         .post('/api/tags')
+        .set('Authorization', `Bearer ${token}`)
         .send(newItem)
         .then(res => {
           expect(res).to.have.status(400);
@@ -176,11 +178,12 @@ describe('Noteful API - Tags', function () {
     });
 
     it('should return an error when given a duplicate name', function () {
-      return Tag.findOne()
+      return Tag.findOne({ userId: user.id })
         .then(data => {
           const newItem = { name: data.name };
           return chai.request(app)
             .post('/api/tags')
+            .set('Authorization', `Bearer ${token}`)
             .send(newItem);
         })
         .then(res => {
