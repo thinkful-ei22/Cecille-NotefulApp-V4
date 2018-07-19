@@ -11,6 +11,7 @@ const app = require('../server');
 const Folder = require('../models/folder');
 const User = require('../models/user');
 const seedFolders = require('../db/seed/folders');
+const seedUsers = require('../db/seed/users');
 const { TEST_MONGODB_URI } = require('../config');
 
 chai.use(chaiHttp);
