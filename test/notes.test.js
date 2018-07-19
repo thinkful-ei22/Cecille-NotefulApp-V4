@@ -33,7 +33,7 @@ describe('Noteful API - Notes', function () {
   let user;
 
   beforeEach(function () {
-    return Promise.all
+    return Promise.all([
       User.insertMany(seedUsers),
       Note.insertMany(seedNotes),
 
