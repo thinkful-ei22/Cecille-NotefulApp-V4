@@ -24,10 +24,15 @@ describe('Noteful API - Tags', function () {
   let user;
 
   beforeEach(function () {
-    return Promise.all([
+    return Promise.all
+      User.insertMany(seedUsers),
       Tag.insertMany(seedTags),
       Tag.createIndexes()
-    ]);
+    ])
+      .then(([users]) => {
+        user = users[0];
+        token = jwt.sign({ user }, JWT_SECRET, { subject: user.username })
+      })
   });
 
   afterEach(function () {
