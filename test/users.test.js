@@ -22,7 +22,15 @@ describe.only('Noteful API - Users', function () {
   });
 
   beforeEach(function () {
-    return User.createIndexes();
+    return Promise.all([
+      User.insertMany(seedUsers),
+      Folder.insertMany(seedFolders),
+      Folder.createIndexes()
+    ])
+    .then(([users]) => {
+      user = users[0];
+      token = jwt.sign({ user }, JWT_SECRET, { subject: user.username});
+    });
   });
 
   afterEach(function () {
