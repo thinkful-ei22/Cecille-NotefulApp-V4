@@ -51,8 +51,10 @@ describe('Noteful API - Tags', function () {
 
     it('should return the correct number of tags', function () {
       return Promise.all([
-        Tag.find(),
-        chai.request(app).get('/api/tags')
+        Tag.find({ userId: user.id }),
+        chai.request(app)
+          .get('/api/tags')
+          .set('Authorization', `Bearer ${token}`)
       ])
         .then(([data, res]) => {
           expect(res).to.have.status(200);
@@ -62,10 +64,13 @@ describe('Noteful API - Tags', function () {
         });
     });
 
-    it('should return a list with the correct fields and values', function () {
+    it.only('should return a list with the correct fields and values', function () {
       return Promise.all([
-        Tag.find().sort('name'),
-        chai.request(app).get('/api/tags')
+        Tag.find({ userId: user.id })
+          .sort('name'),
+        chai.request(app)
+          .get('/api/tags')
+          .set('Authorization', `Bearer ${token}`)
       ])
         .then(([data, res]) => {
           expect(res).to.have.status(200);
@@ -74,7 +79,7 @@ describe('Noteful API - Tags', function () {
           expect(res.body).to.have.length(data.length);
           res.body.forEach(function (item, i) {
             expect(item).to.be.a('object');
-            expect(item).to.have.all.keys('id', 'name', 'createdAt', 'updatedAt');
+            expect(item).to.have.all.keys('id', 'name', 'createdAt', 'updatedAt', 'createdAt');
             expect(item.id).to.equal(data[i].id);
             expect(item.name).to.equal(data[i].name);
 
