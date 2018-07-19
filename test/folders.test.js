@@ -20,11 +20,19 @@ describe('Noteful API - Folders', function () {
       .then(() => mongoose.connection.db.dropDatabase());
   });
 
+  let token;
+  let user;
+
   beforeEach(function () {
     return Promise.all([
+      User.insertMany(seedUsers),
       Folder.insertMany(seedFolders),
       Folder.createIndexes()
-    ]);
+    ])
+      .then(([users]) => {
+        user = users[0];
+        token = jwt.sign({ user }, JWT_SECRET, { subject: user.username });
+      })
   });
 
   afterEach(function () {
