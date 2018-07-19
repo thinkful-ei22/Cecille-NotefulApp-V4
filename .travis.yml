@@ -1,3 +1,10 @@
 language: node_js
 node_js: node
 services: mongodb
+deploy:
+  provider: heroku
+  api_key:
+    secure: mkVTh4XS5arznImGmfC7u/Rh67TID9W8NDWsZuzmx7pVzqu/lSSgMq+sOnvoTek1IV6q5+A7GrZD1+QrJioqvr1Zd88zwcOPXPKN4kCQ2jaMQjdd/nIawwiggoj7O6//br1Izvsd5BOj3giGfgw4WnYwA3VeVbhmIKRnwHvFXanYIxSaIeR1qkMTgwzrDffHJDhaOkSFEszzkRQblBZXyIQPgZ7eUvOg3+gaO/J/Xw50szID7GNc6reirUq7sfYIV56lFwAUUCejiZD2SgR05tl5yZps1numkEUqPQ+pRRLIg7Ry0+BYGMaxUnsZAEr1eB2e+ygntJS54X6WRXf0wbOjQskAbZvlbTOq+GQiwmDHmpG/pUp51EZyTPVjvfUonK4mSnYhIXEsDDbPU7IDez8+ajPzKbG8P5xjIbinIlCmDTK1K73/7KRePpdOfrT+33HBIrw3ybDGCn4ubCwuTNqcuDua3g5uY2GtOlZXr22MVhXB3Gk+gl3XX/SHiirbDsh3KP1L0B2bzPbjwbl4UW+LlxRHdw2wXnQ1rCjghhzf08QHkpLLMh8QYb8Lpgm5wVgj69UgJM4zfFYWQjeglQTbNQZkzHKhUAeaAqlurD2ShyJnfkMLZBSYcxhxFvqnAwauhcdDG+QKPmE52UMd6sWYM/R8yFmuS0Gv6F2+XmE=
+  app: cecille-noteful-v4
+  on:
+    repo: thinkful-ei22/Cecille-NotefulApp-V4
