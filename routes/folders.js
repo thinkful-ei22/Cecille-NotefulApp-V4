@@ -3,6 +3,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport');
+const { getAllFoldersHandler, getFolderByIdHandler, postFolderHandler, putFolderHandler, deleteFolderHandler} = require('../handlers/handlers-folders');
 
 const Folder = require('../models/folder');
 const Note = require('../models/note');
@@ -14,8 +15,8 @@ router.use('/', passport.authenticate('jwt', { session: false, failWithError: tr
 
 router.get('/', getAllFoldersHandler);
 router.get('/:id', getFolderByIdHandler);
-router.post('/', postFolderById);
-router.put('/:id', putFolderById);
-router.delete('/:id', deleteFolderById);
+router.post('/', postFolderHandler);
+router.put('/:id', putFolderHandler);
+router.delete('/:id', deleteFolderHandler);
 
 module.exports = router;
