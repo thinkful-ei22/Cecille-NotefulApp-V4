@@ -51,10 +51,13 @@ const validateTagId = function(tags, userId) {
     })
 }
 
-router.get('/', getNotesHandler);
-router.get('/:id', getNoteByIdHandler);
-router.post('/', postNoteHandler);
-router.put('/:id', putNoteHandler);
-router.delete('/:id', deleteNoteHandler);
+router.route('/')
+  .get(getNotesHandler)
+  .post(postNoteHandler)
+
+router.route('/:id')
+  .get(getNoteByIdHandler)
+  .put(putNoteHandler)
+  .delete(deleteNoteHandler)
 
 module.exports = router;
