@@ -12,10 +12,13 @@ const router = express.Router();
 
 router.use('/', passport.authenticate('jwt', { session: false, failWithError: true }));
 
-router.get('/', getAllTagsHandler);
-router.get('/:id', getTagByIdHandler);
-router.post('/', postTagHandler);
-router.put('/:id', putTagHandler);
-router.delete('/:id', deleteTagHandler);
+router.route('/')
+  .get(getAllTagsHandler)
+  .post(postTagHandler)
+
+router.route('/:id')
+  .get(getTagByIdHandler)
+  .put(putTagHandler)
+  .delete(deleteTagHandler)
 
 module.exports = router;
