@@ -13,10 +13,13 @@ const router = express.Router();
 
 router.use('/', passport.authenticate('jwt', { session: false, failWithError: true }));
 
-router.get('/', getAllFoldersHandler);
-router.get('/:id', getFolderByIdHandler);
-router.post('/', postFolderHandler);
-router.put('/:id', putFolderHandler);
-router.delete('/:id', deleteFolderHandler);
+router.route('/')
+  .get(getAllFoldersHandler)
+  .post(postFolderHandler)
+
+router.route('/:id')
+  .get(getFolderByIdHandler)
+  .put(putFolderHandler)
+  .delete(deleteFolderHandler)
 
 module.exports = router;
